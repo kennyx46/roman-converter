@@ -5,7 +5,7 @@ describe('ConversionForm', () => {
 
   it ('renders form Component', () => {
     render(<ConversionForm />);
-    const header = screen.getByText('Number Convertor');
+    const header = screen.getByText('Number Converter');
     expect(header).toBeInTheDocument();
   });
 

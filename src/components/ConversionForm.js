@@ -35,7 +35,7 @@ const ConversionForm = () => {
                 <div className="flex items-center space-x-5">
                   <div className={styles.icon}>i</div>
                   <div className="pl-2 font-semibold text-xl text-gray-700">
-                    <h2 className="leading-relaxed">Number Convertor</h2>
+                    <h2 className="leading-relaxed">Number Converter</h2>
                     <p className="text-sm text-gray-500 font-normal leading-relaxed">
                       Please enter {isToRomanMode ? 'Arabic' : 'Roman'} number format
                     </p>
