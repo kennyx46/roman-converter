@@ -14,20 +14,56 @@ const symbolMappings = {
   1000: 'M',
 };
 
-const invalidCharacters = ["CMCM", "CMD", "CMCD", "CMC", "DD", "DCD", "CDCD", "CDC", "CCCC", "XCXC", "XCL", "XCXL", "XCX", "LL", "LXL", "XLXL", "XLX", "XXXX", "IXIX", "IXV", "IXIV", "IXI", "IVIV", "IVI", "IIII", "VV", "VIV", "VIIII"];
+const invalidToValidCharactersMapping = {
+  'CMCM': 'MDCCC', 
+  'CMD': 'MCD',
+  'CMCD': 'MIII', 
+  'CMC': 'M', 
+  'DD': 'M', 
+  'DCD': 'CM', 
+  'CDCD': 'DCCC', 
+  'CDC': 'D', 
+  'CCCC': 'CD', 
+  'XCXC': 'CLXXX', 
+  'XCL': 'CXL', 
+  'XCXL': 'CIII', 
+  'XCX': 'C', 
+  'LL': 'C', 
+  'LXL': 'XC', 
+  'XLXL': 'LXXX', 
+  'XLX': 'L', 
+  'XXXX': 'XL', 
+  'IXIX': 'XVIII', 
+  'IXV': 'XIV', 
+  'IXIV': 'XIII', 
+  'IXI': 'X', 
+  'IVIV': 'VIII', 
+  'IVI': 'V', 
+  'IIII': 'IV', 
+  'VV': 'X', 
+  'VIV': 'IX', 
+  'VIIII': 'IX'
+};
 
-const validReplacements = ["MDCCC", "MCD", "MIII", "M", "M", "CM", "DCCC", "D", "CD", "CLXXX", "CXL", "CIII", "C", "C", "XC", "LXXX", "L", "XL", "XVIII", "XIV", "XIII", "X", "VIII", "V", "IV", "X", "IX", "IX"]
+const invalidCharacters = Object.keys(invalidToValidCharactersMapping);
 
-const reversedValues = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+const reversedValues = Object.keys(symbolMappings)
+  .map((num) => parseInt(num))
+  .sort((num1, num2) => num1 > num2)
+  .reverse();
 
-export const fromRoman = (numeral) => {
+const isNumber = (val) => /^\d+$/.test(val);
+
+export const fromRoman = (romanNumber) => {
     let result = 0
     let i = 0
+    let numeral = romanNumber
     while (numeral.length > 0 && i < reversedValues.length) {
       let symbol = reversedValues[i]
       for (let j = 0; j < invalidCharacters.length; j++) {
-        if (numeral.startsWith(invalidCharacters[j])) {
-          return `${invalidCharacters[j]} is invalid, use ${validReplacements[j]} instead`;
+        const character = invalidCharacters[j];
+        if (numeral.startsWith(character)) {
+          return `${character} is invalid, use ${invalidToValidCharactersMapping[character]} instead`;
         }
       }
       if (numeral.startsWith(symbolMappings[symbol])) {
@@ -47,8 +83,12 @@ export const fromRoman = (numeral) => {
 
 export const toRoman = (number) => {
 
+  if (!isNumber(number)) {
+    return "Invalid Number";
+  }
+
   if (number <= 0 || number > 4000) {
-    return "Number can not be converted";
+    return "Number should be > 0 and < 4000";
   }
 
   let result = ''

@@ -11,7 +11,7 @@ describe('Roman to Arabic number conversion', () => {
   });
 
   it('is same number after two conversions', () => {
-    const romanNumber = 'MCMXCIX';
+    const romanNumber = 'MMXXI';
     const result = romanNumerals.toRoman(romanNumerals.fromRoman(romanNumber));
 
     expect(result).toEqual(romanNumber);
@@ -37,7 +37,7 @@ describe('Arabic to Roman number conversion', () => {
   });
 
   it('is same number after two conversions', () => {
-    const arabicNumber = 1999;
+    const arabicNumber = 2021;
     const result = romanNumerals.fromRoman(romanNumerals.toRoman(arabicNumber));
 
     expect(result).toEqual(arabicNumber);
